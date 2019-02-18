@@ -1,0 +1,24 @@
+@using Blog.Models.Entities
+@model Task<IEnumerable<Post>>
+
+
+@foreach (var item in await Model)
+{
+    <article>
+        <header>
+            <h1>
+                @(item?.Title)
+            </h1>
+            <p>@(item?.User?.UserName)</p>
+            <p>@(item?.DateOfCreation.ToString("dd/MM/yyyy - hh:mm"))</p>
+        </header>
+        <footer>
+            <p>
+                @(String.Join("",item?.Content?.Take(100)))
+            </p>
+            <p>Comments: <span>@(item?.Comments?.Count ?? 0)</span></p>
+            <a asp-controller="Post" asp-action="Entry" asp-route-id="@item.PostId" >+</a>
+        </footer>
+    </article>
+    <hr />
+}
